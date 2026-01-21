@@ -55,7 +55,35 @@
 .modal-trailer {
     width: 100%;
     height: 100%;
-    pointer-events: none;
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.volume-btn {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    z-index: 20;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.volume-btn:hover {
+    background: white;
+    color: black;
+    transform: scale(1.1);
 }
 
 .modal-fallback-img {

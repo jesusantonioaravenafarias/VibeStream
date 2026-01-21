@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { X, Play, Plus, Check, Star } from 'lucide-react';
+import React, { useEffect, useState, useRef } from 'react';
+import { X, Play, Plus, Check, Star, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import axios from 'axios';
-import AdBanner from './AdBanner';
+import YouTube from 'react-youtube';
 import './MovieModal.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
@@ -10,6 +10,8 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 const MovieModal = ({ movie, onClose }) => {
     const [details, setDetails] = useState(null);
     const [trailer, setTrailer] = useState(null);
+    const [isMuted, setIsMuted] = useState(false); // Default to unmuted per request
+    const playerRef = useRef(null);
 
     useEffect(() => {
         if (movie) {
@@ -26,6 +28,42 @@ const MovieModal = ({ movie, onClose }) => {
             fetchDetails();
         }
     }, [movie]);
+
+    const opts = {
+        height: '100%',
+        width: '100%',
+        playerVars: {
+            autoplay: 1,
+            controls: 0,
+            modestbranding: 1,
+            rel: 0,
+            showinfo: 0,
+            mute: 0, // Request unmuted
+            loop: 1,
+            playlist: trailer
+        },
+    };
+
+    const toggleMute = () => {
+        if (playerRef.current) {
+            if (isMuted) {
+                playerRef.current.unMute();
+            } else {
+                playerRef.current.mute();
+            }
+            setIsMuted(!isMuted);
+        }
+    };
+
+    const onReady = (event) => {
+        playerRef.current = event.target;
+        // Try to start unmuted, but browsers might block it.
+        // If blocked, we handle it gracefully (user can use the button).
+        event.target.playVideo();
+        if (!isMuted) {
+            event.target.unMute();
+        }
+    };
 
     if (!movie) return null;
 
@@ -45,13 +83,20 @@ const MovieModal = ({ movie, onClose }) => {
 
                     <div className="modal-header">
                         {trailer ? (
-                            <iframe
-                                className="modal-trailer"
-                                src={`https://www.youtube.com/embed/${trailer}?autoplay=1&mute=1&controls=0&loop=1&playlist=${trailer}`}
-                                title="Movie Trailer"
-                                frameBorder="0"
-                                allow="autoplay; encrypted-media"
-                            />
+                            <div className="video-container">
+                                <YouTube
+                                    videoId={trailer}
+                                    opts={opts}
+                                    className="modal-trailer"
+                                    onReady={onReady}
+                                />
+                                <button className="volume-btn" onClick={(e) => {
+                                    e.stopPropagation();
+                                    toggleMute();
+                                }}>
+                                    {isMuted ? <VolumeX size={24} /> : <Volume2 size={24} />}
+                                </button>
+                            </div>
                         ) : (
                             <img
                                 src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`}
