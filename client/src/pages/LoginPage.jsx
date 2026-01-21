@@ -25,7 +25,7 @@ const LoginPage = () => {
         <div className="auth-container">
             <div className="auth-overlay" />
             <div className="auth-card">
-                <h1>VibeStream</h1>
+                <h1>Vellix</h1>
                 <h2>Iniciar Sesión</h2>
                 <form onSubmit={handleSubmit}>
                     {error && <p className="error-msg">{error}</p>}
@@ -50,8 +50,7 @@ const LoginPage = () => {
                     <button type="submit" className="auth-btn">Entrar</button>
                 </form>
                 <div className="auth-footer">
-                    <h1>VibeStreaming</h1>
-                    <p>¿Nuevo en VibeStreaming? <Link to="/register">Regístrate ahora</Link></p>
+                    <p>¿Nuevo en Vellix? <Link to="/register">Regístrate ahora</Link></p>
                 </div>
             </div>
         </div>

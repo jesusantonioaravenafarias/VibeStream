@@ -16,7 +16,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('VibeStream API is running... 🚀');
+    res.send('Vellix API is running... 🚀');
 });
 
 // Routes will be imported// Routes

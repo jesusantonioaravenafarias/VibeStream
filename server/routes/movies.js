@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const prisma = new PrismaClient();
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const TMDB_API_KEY = process.env.TMDB_API_KEY;
-const JWT_SECRET = process.env.JWT_SECRET || 'vibestream_secret_key_123';
+const JWT_SECRET = process.env.JWT_SECRET || 'vellix_secret_key_123';
 
 // Middleware to verify JWT for favorite operations
 const authenticate = (req, res, next) => {

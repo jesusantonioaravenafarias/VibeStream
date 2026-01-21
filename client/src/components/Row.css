@@ -1,6 +1,18 @@
 .row {
-    margin-left: 4%;
-    margin-top: 2rem;
+    color: white;
+    margin-left: 20px;
+    padding: 20px 0;
+}
+
+.status-msg {
+    padding: 20px;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+}
+
+.status-msg.error {
+    color: #ff4d4d;
 }
 
 .row-title {

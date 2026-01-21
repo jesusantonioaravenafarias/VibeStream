@@ -5,7 +5,7 @@ import { useMovies } from '../hooks/useMovies';
 import MovieModal from './MovieModal';
 
 const Row = ({ title, endpoint, isLargeRow }) => {
-    const { movies, loading } = useMovies(endpoint);
+    const { movies, loading, error } = useMovies(endpoint);
     const [selectedMovie, setSelectedMovie] = useState(null);
 
     return (
@@ -13,6 +13,9 @@ const Row = ({ title, endpoint, isLargeRow }) => {
             <h2 className="row-title">{title}</h2>
 
             <div className="row-posters">
+                {loading && <p className="status-msg">Cargando...</p>}
+                {error && <p className="status-msg error">Error: {error}</p>}
+                {!loading && !error && movies.length === 0 && <p className="status-msg">No hay contenido disponible.</p>}
                 {movies.map((movie, index) => (
                     <motion.div
                         key={movie.id}

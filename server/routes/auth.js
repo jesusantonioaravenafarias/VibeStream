@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { PrismaClient } = require('@prisma/client');
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'vibestream_secret_key_123';
+const JWT_SECRET = process.env.JWT_SECRET || 'vellix_secret_key_123';
 
 // Register
 router.post('/register', async (req, res) => {

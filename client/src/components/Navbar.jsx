@@ -21,7 +21,7 @@ const Navbar = () => {
         <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
             <div className="navbar-left">
                 <Link to="/">
-                    <img src="/src/assets/logo.png" alt="VibeStream" className="logo" />
+                    <img src="/src/assets/logo.png" alt="Vellix" className="logo" />
                 </Link>
                 <ul className="nav-links">
                     <li><Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>Inicio</Link></li>
@@ -39,7 +39,7 @@ const Navbar = () => {
                     <div className="user-profile">
                         <User className="nav-icon active-user" />
                         <div className="dropdown">
-                            <span className="logo-text">VibeStreaming</span>
+                            <span className="user-name">{user.name}</span>
                             <span>Ajustes</span>
                             <hr />
                             <span onClick={logout}>Cerrar Sesión</span>

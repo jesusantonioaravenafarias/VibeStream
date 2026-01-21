@@ -16,7 +16,6 @@ export const useMovies = (endpoint = '/trending') => {
             } catch (err) {
                 setError(err.message);
             } finally {
-                setLoading(setLoading => false);
                 setLoading(false);
             }
         };
