@@ -27,7 +27,7 @@ const authenticate = (req, res, next) => {
 router.get('/trending', async (req, res) => {
     try {
         const response = await axios.get(`${TMDB_BASE_URL}/trending/all/week`, {
-            params: { api_key: TMDB_API_KEY }
+            params: { api_key: TMDB_API_KEY, language: 'es-ES' }
         });
         res.json(response.data.results);
     } catch (error) {
@@ -40,7 +40,7 @@ router.get('/trending', async (req, res) => {
 router.get('/popular', async (req, res) => {
     try {
         const response = await axios.get(`${TMDB_BASE_URL}/movie/popular`, {
-            params: { api_key: TMDB_API_KEY, language: 'en-US', page: 1 }
+            params: { api_key: TMDB_API_KEY, language: 'es-ES', page: 1 }
         });
         res.json(response.data.results);
     } catch (error) {
@@ -52,7 +52,7 @@ router.get('/popular', async (req, res) => {
 router.get('/top-rated', async (req, res) => {
     try {
         const response = await axios.get(`${TMDB_BASE_URL}/movie/top_rated`, {
-            params: { api_key: TMDB_API_KEY, language: 'en-US', page: 1 }
+            params: { api_key: TMDB_API_KEY, language: 'es-ES', page: 1 }
         });
         res.json(response.data.results);
     } catch (error) {
@@ -64,7 +64,7 @@ router.get('/top-rated', async (req, res) => {
 router.get('/upcoming', async (req, res) => {
     try {
         const response = await axios.get(`${TMDB_BASE_URL}/movie/upcoming`, {
-            params: { api_key: TMDB_API_KEY, language: 'en-US', page: 1 }
+            params: { api_key: TMDB_API_KEY, language: 'es-ES', page: 1 }
         });
         res.json(response.data.results);
     } catch (error) {
@@ -76,7 +76,7 @@ router.get('/upcoming', async (req, res) => {
 router.get('/:id', async (req, res) => {
     try {
         const response = await axios.get(`${TMDB_BASE_URL}/movie/${req.params.id}`, {
-            params: { api_key: TMDB_API_KEY, append_to_response: 'videos' }
+            params: { api_key: TMDB_API_KEY, append_to_response: 'videos', language: 'es-ES' }
         });
         res.json(response.data);
     } catch (error) {
