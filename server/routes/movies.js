@@ -78,4 +78,40 @@ router.get('/favorites/me', authenticate, async (req, res) => {
     }
 });
 
+// Get Popular Movies
+router.get('/popular', async (req, res) => {
+    try {
+        const response = await axios.get(`${TMDB_BASE_URL}/movie/popular`, {
+            params: { api_key: TMDB_API_KEY, language: 'en-US', page: 1 }
+        });
+        res.json(response.data.results);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching popular movies' });
+    }
+});
+
+// Get Top Rated Movies
+router.get('/top-rated', async (req, res) => {
+    try {
+        const response = await axios.get(`${TMDB_BASE_URL}/movie/top_rated`, {
+            params: { api_key: TMDB_API_KEY, language: 'en-US', page: 1 }
+        });
+        res.json(response.data.results);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching top rated movies' });
+    }
+});
+
+// Get Upcoming Movies (New Releases)
+router.get('/upcoming', async (req, res) => {
+    try {
+        const response = await axios.get(`${TMDB_BASE_URL}/movie/upcoming`, {
+            params: { api_key: TMDB_API_KEY, language: 'en-US', page: 1 }
+        });
+        res.json(response.data.results);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching upcoming movies' });
+    }
+});
+
 module.exports = router;
