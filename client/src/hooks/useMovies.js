@@ -12,7 +12,12 @@ export const useMovies = (endpoint = '/trending') => {
         const fetchMovies = async () => {
             try {
                 const response = await axios.get(`${API_URL}${endpoint}`);
-                setMovies(response.data);
+                if (Array.isArray(response.data)) {
+                    setMovies(response.data);
+                } else {
+                    setMovies([]);
+                    console.warn(`Unexpected API response format for ${endpoint}`, response.data);
+                }
             } catch (err) {
                 setError(err.message);
             } finally {

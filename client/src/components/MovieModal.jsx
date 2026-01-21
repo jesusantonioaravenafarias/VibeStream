@@ -1,3 +1,10 @@
+import React, { useEffect, useState } from 'react';
+import { X, Play, Plus, Check, Star } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import axios from 'axios';
+import AdBanner from './AdBanner';
+import './MovieModal.css';
+
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const MovieModal = ({ movie, onClose }) => {

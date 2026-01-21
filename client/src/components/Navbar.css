@@ -74,6 +74,35 @@
     transform: scale(1.1);
 }
 
+.navbar-auth-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.nav-btn-login {
+    color: white;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.nav-btn-register {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.nav-btn-register:hover {
+    background-color: #7b2eda;
+}
+
+/* User Profile */
 .user-profile {
     position: relative;
     cursor: pointer;

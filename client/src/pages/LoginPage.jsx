@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import AdBanner from '../components/AdBanner';
 import './AuthPages.css';
 
@@ -9,6 +10,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const { login } = useAuth();
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
@@ -50,7 +52,7 @@ const LoginPage = () => {
                     <button type="submit" className="auth-btn">Entrar</button>
                 </form>
                 <div className="auth-footer">
-                    <p>¿Nuevo en Vellix? <Link to="/register">Regístrate ahora</Link></p>
+                    <p>{t('login_new')} <Link to="/register">{t('login_register')}</Link></p>
                 </div>
             </div>
         </div>

@@ -4,25 +4,32 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Row from './components/Row';
+import Footer from './components/Footer';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
 import { useMovies } from './hooks/useMovies';
 import { AuthProvider, useAuth } from './hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 const HomePage = () => {
-    const { movies } = useMovies('/trending');
+    const { t } = useTranslation();
+    const { movies } = useMovies('/movies/trending');
     const featuredMovie = movies[Math.floor(Math.random() * movies.length)];
 
     return (
-        <>
+        <main>
             <Navbar />
             <Hero movie={featuredMovie} />
-            <div className="rows-container" style={{ width: '100%', marginTop: '-150px', position: 'relative', zIndex: '20' }}>
-                <Row title="Tendencias de la semana" endpoint="/trending" isLargeRow />
-                <Row title="Populares" endpoint="/trending" />
-                <Row title="Lo más visto" endpoint="/trending" />
+            <div className="rows-container" style={{ width: '100%', marginTop: '10px', position: 'relative', zIndex: '20' }}>
+                <Row title={t('row_trending_week')} endpoint="/movies/trending" isLargeRow />
+                <Row title={t('row_popular')} endpoint="/movies/popular" isLargeRow />
+                <Row title={t('row_most_viewed')} endpoint="/movies/top-rated" isLargeRow />
+                <Row title={t('nav_novedades')} endpoint="/movies/upcoming" isLargeRow />
             </div>
-        </>
+            <Footer />
+        </main>
     );
 };
 
@@ -35,6 +42,8 @@ function App() {
                         <Route path="/" element={<HomePage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/register" element={<RegisterPage />} />
+                        <Route path="/privacy" element={<PrivacyPage />} />
+                        <Route path="/terms" element={<TermsPage />} />
                     </Routes>
                 </div>
             </Router>
