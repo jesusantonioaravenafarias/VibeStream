@@ -39,7 +39,7 @@ const Navbar = () => {
                     <div className="user-profile">
                         <User className="nav-icon active-user" />
                         <div className="dropdown">
-                            <span className="user-name">{user.name}</span>
+                            <span className="logo-text">VibeStreaming</span>
                             <span>Ajustes</span>
                             <hr />
                             <span onClick={logout}>Cerrar Sesión</span>

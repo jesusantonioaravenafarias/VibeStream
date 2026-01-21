@@ -50,7 +50,8 @@ const LoginPage = () => {
                     <button type="submit" className="auth-btn">Entrar</button>
                 </form>
                 <div className="auth-footer">
-                    <p>¿Nuevo en VibeStream? <Link to="/register">Regístrate ahora</Link></p>
+                    <h1>VibeStreaming</h1>
+                    <p>¿Nuevo en VibeStreaming? <Link to="/register">Regístrate ahora</Link></p>
                 </div>
             </div>
         </div>

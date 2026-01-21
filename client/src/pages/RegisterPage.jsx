@@ -26,7 +26,7 @@ const RegisterPage = () => {
         <div className="auth-container">
             <div className="auth-overlay" />
             <div className="auth-card">
-                <h1>VibeStream</h1>
+                <h1>VibeStreaming</h1>
                 <h2>Registro</h2>
                 <form onSubmit={handleSubmit}>
                     {error && <p className="error-msg">{error}</p>}
