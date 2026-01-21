@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { X, Play, Plus, Check, Star, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import YouTube from 'react-youtube';
 import './MovieModal.css';
@@ -12,6 +13,7 @@ const MovieModal = ({ movie, onClose }) => {
     const [trailer, setTrailer] = useState(null);
     const [isMuted, setIsMuted] = useState(false); // Default to unmuted per request
     const playerRef = useRef(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (movie) {
@@ -116,7 +118,7 @@ const MovieModal = ({ movie, onClose }) => {
                                 <span className="modal-runtime">{details?.runtime} min</span>
                             </div>
                             <div className="modal-actions">
-                                <button className="modal-btn play-btn">
+                                <button className="modal-btn play-btn" onClick={() => navigate(`/watch/${movie.id}`)}>
                                     <Play size={20} fill="black" /> Reproducir
                                 </button>
                                 <button className="modal-btn icon-btn">

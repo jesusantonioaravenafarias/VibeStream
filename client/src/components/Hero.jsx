@@ -1,9 +1,11 @@
 import React from 'react';
 import { Play, Info } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import './Hero.css';
 
 const Hero = ({ movie }) => {
+    const navigate = useNavigate();
     if (!movie) return <div className="hero-placeholder" />;
 
     const truncate = (string, n) => {
@@ -30,7 +32,7 @@ const Hero = ({ movie }) => {
                 </h1>
 
                 <div className="hero-buttons">
-                    <button className="hero-button play">
+                    <button className="hero-button play" onClick={() => navigate(`/watch/${movie.id}`)}>
                         <Play size={20} fill="currentColor" /> Reproducir
                     </button>
                     <button className="hero-button info">
