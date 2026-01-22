@@ -10,6 +10,7 @@ import RegisterPage from './pages/RegisterPage';
 import PrivacyPage from './pages/PrivacyPage';
 import TermsPage from './pages/TermsPage';
 import WatchPage from './pages/WatchPage';
+import SearchPage from './pages/SearchPage';
 import { useMovies } from './hooks/useMovies';
 import { AuthProvider, useAuth } from './hooks/useAuth';
 import { useTranslation } from 'react-i18next';
@@ -46,6 +47,7 @@ function App() {
                         <Route path="/privacy" element={<PrivacyPage />} />
                         <Route path="/terms" element={<TermsPage />} />
                         <Route path="/watch/:id" element={<WatchPage />} />
+                        <Route path="/search" element={<SearchPage />} />
                     </Routes>
                 </div>
             </Router>

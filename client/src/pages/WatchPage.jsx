@@ -33,21 +33,6 @@ const WatchPage = () => {
     ];
 
     const [currentServer, setCurrentServer] = useState(servers[0]);
-    const [movieTitle, setMovieTitle] = useState('');
-
-    useEffect(() => {
-        const fetchTitle = async () => {
-            try {
-                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/movies/${id}`, {
-                    params: { lang: navigator.language }
-                });
-                setMovieTitle(response.data.title || response.data.name || '');
-            } catch (error) {
-                console.error("Error fetching title", error);
-            }
-        };
-        fetchTitle();
-    }, [id]);
 
     return (
         <div className="watch-screen">
@@ -81,20 +66,6 @@ const WatchPage = () => {
                     title="Reproductor"
                 ></iframe>
             </div>
-
-            {movieTitle && (
-                <div className="watch-fallback">
-                    <p>¿Sigue en Inglés? 😓</p>
-                    <a
-                        href={`https://www.google.com/search?q=ver+${encodeURIComponent(movieTitle)}+online+latino+gratis`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="google-btn"
-                    >
-                        🔍 Buscar "{movieTitle}" en Latino (Google)
-                    </a>
-                </div>
-            )}
         </div>
     );
 };

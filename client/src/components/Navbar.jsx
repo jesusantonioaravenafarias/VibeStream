@@ -1,54 +1,82 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Bell, User, LogOut } from 'lucide-react';
+```javascript
+import React, { useState, useEffect, useRef } from 'react';
+import { Search, Bell, Menu, X, Globe, LogOut, User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import './Navbar.css';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const { t } = useTranslation();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { user, logout } = useAuth();
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+
+    // Search State
+    const [showSearch, setShowSearch] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const searchInputRef = useRef(null);
+
+    // Notifications State
+    const [showNotifications, setShowNotifications] = useState(false);
+    const [recentMovies, setRecentMovies] = useState([]);
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 0);
+            if (window.scrollY > 100) {
+                setIsScrolled(true);
+            } else {
+                setIsScrolled(false);
+            }
         };
+
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    return (
-        <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-            <div className="navbar-left">
-                <Link to="/">
-                    <img src="/logo.png" alt="Vellix" className="logo" />
-                </Link>
-                <ul className="nav-links">
-                    <li><Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>{t('nav_inicio')}</Link></li>
-                    <li>{t('nav_series')}</li>
-                    <li>{t('nav_peliculas')}</li>
-                    <li>{t('nav_novedades')}</li>
-                    <li>{t('nav_mi_lista')}</li>
-                </ul>
-            </div>
+    // Fetch notifications (Simulated with Upcoming movies)
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            if (user) {
+                try {
+                    const response = await axios.get(`${ API_URL } /movies/upcoming`, {
+                         params: { lang: navigator.language }
+                    });
+                    setRecentMovies(response.data.slice(0, 5)); // Top 5
+                } catch (error) {
+                    console.error("Failed to fetch notifications");
+                }
+            }
+        };
+        fetchNotifications();
+    }, [user]);
 
-            <div className="navbar-right">
-                <Search className="nav-icon" />
-                <Bell className="nav-icon" />
-                {user ? (
-                    <div className="user-profile">
-                        <User className="nav-icon active-user" />
-                        <div className="dropdown">
-                            <span className="user-name">{user.name}</span>
-                            <span>{t('nav_settings')}</span>
-                            <hr />
-                            <span onClick={logout}>{t('nav_logout')}</span>
-                        </div>
-                    </div>
-                ) : (
-                    <div className="navbar-auth-buttons">
+    const handleSearchSubmit = (e) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/ search ? q = ${ searchQuery } `);
+            setShowSearch(false);
+        }
+    };
+
+    const toggleSearch = () => {
+        setShowSearch(!showSearch);
+        if (!showSearch) {
+            setTimeout(() => searchInputRef.current?.focus(), 100);
+        }
+    };
+
+    const toggleLanguage = () => {
+        const newLang = i18n.language === 'en' ? 'es' : 'en';
+        i18n.changeLanguage(newLang);
+    };
+
+    return (
+        <nav className={`navbar ${ isScrolled ? 'scrolled' : '' } `}>
                         <Link to="/login" className="nav-btn-login">{t('nav_login')}</Link>
                         <Link to="/register" className="nav-btn-register">{t('nav_register')}</Link>
                     </div>
