@@ -52,8 +52,9 @@ const WatchPage = () => {
                     key={currentServer.url} // Force reload on change
                     className="watch-player"
                     src={currentServer.url}
-                    allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
                     allowFullScreen
+                    referrerPolicy="origin"
                     title="Reproductor"
                 ></iframe>
             </div>

@@ -18,9 +18,13 @@
     align-items: center;
     padding: 20px;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+    pointer-events: none;
+    /* Let clicks pass through the gradient */
 }
 
 .back-btn {
+    pointer-events: auto;
+    /* Re-enable clicks for buttons */
     background: transparent;
     border: none;
     color: white;
@@ -40,6 +44,8 @@
 }
 
 .server-selector {
+    pointer-events: auto;
+    /* Re-enable clicks for selector */
     display: flex;
     align-items: center;
     gap: 10px;
