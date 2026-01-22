@@ -15,7 +15,9 @@ const WatchPage = () => {
     const lang = navigator.language.startsWith('es') ? 'es' : 'en'; // Simple logic for major providers
 
     const servers = [
-        { name: 'Latino Pro (VidLink)', url: `https://vidlink.pro/movie/${id}` }, // Often better for Latino auto-detect
+        { name: 'Latino Pro (VidLink)', url: `https://vidlink.pro/movie/${id}` },
+        { name: 'Multi-Res (Smashy)', url: `https://player.smashy.stream/movie/${id}` }, // Aggregator
+        { name: 'Fast (AutoEmbed)', url: `https://autoembed.to/movie/tmdb/${id}` }, // Another source
         { name: 'HD (Super)', url: `https://vidsrc.cc/v2/embed/${mediaType}/${id}?autoPlay=true&lang=${lang}` },
         {
             name: 'Premium (Embed.su)', url: isMovie
