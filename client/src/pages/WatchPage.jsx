@@ -15,6 +15,11 @@ const WatchPage = () => {
     const lang = navigator.language.startsWith('es') ? 'es' : 'en'; // Simple logic for major providers
 
     const servers = [
+        {
+            name: 'Premium (Multi-Lang)', url: isMovie
+                ? `https://embed.su/embed/movie/${id}`
+                : `https://embed.su/embed/tv/${id}/1/1`
+        }, // Default S1E1
         { name: 'LATAM (VidSrc)', url: `https://vidsrc.xyz/embed/${mediaType}/${id}?lang=${lang}` },
         { name: 'Plus (VidSrc.to)', url: `https://vidsrc.to/embed/${mediaType}/${id}?lang=${lang}` },
         {
