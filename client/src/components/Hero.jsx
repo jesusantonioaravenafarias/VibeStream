@@ -32,7 +32,7 @@ const Hero = ({ movie }) => {
                 </h1>
 
                 <div className="hero-buttons">
-                    <button className="hero-button play" onClick={() => navigate(`/watch/${movie.id}`)}>
+                    <button className="hero-button play" onClick={() => navigate(`/watch/${movie.id}`, { state: { type: movie.media_type || 'movie' } })}>
                         <Play size={20} fill="currentColor" /> Reproducir
                     </button>
                     <button className="hero-button info">

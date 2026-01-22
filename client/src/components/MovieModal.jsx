@@ -118,7 +118,7 @@ const MovieModal = ({ movie, onClose }) => {
                                 <span className="modal-runtime">{details?.runtime} min</span>
                             </div>
                             <div className="modal-actions">
-                                <button className="modal-btn play-btn" onClick={() => navigate(`/watch/${movie.id}`)}>
+                                <button className="modal-btn play-btn" onClick={() => navigate(`/watch/${movie.id}`, { state: { type: movie.media_type || 'movie' } })}>
                                     <Play size={20} fill="black" /> Reproducir
                                 </button>
                                 <button className="modal-btn icon-btn">
