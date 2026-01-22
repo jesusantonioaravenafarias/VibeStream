@@ -33,6 +33,23 @@ const WatchPage = () => {
     ];
 
     const [currentServer, setCurrentServer] = useState(servers[0]);
+    const [movieTitle, setMovieTitle] = useState('');
+
+    useEffect(() => {
+        // Fetch title for the search button
+        const fetchTitle = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/movies/${id}`);
+                setMovieTitle(response.data.title || response.data.name);
+            } catch (e) { console.error(e); }
+        };
+        fetchTitle();
+    }, [id]);
+
+    const handleExternalSearch = () => {
+        const query = `ver ${movieTitle} ${mediaType === 'tv' ? 'serie' : 'pelicula'} latino online gratis`;
+        window.open(`https://www.google.com/search?q=${encodeURIComponent(query)}`, '_blank');
+    };
 
     return (
         <div className="watch-screen">
@@ -42,6 +59,9 @@ const WatchPage = () => {
                 </button>
 
                 <div className="server-selector">
+                    <button className="search-external-btn" onClick={handleExternalSearch} title="Buscar en Google si no carga">
+                        🔍 Buscar Latino
+                    </button>
                     <span className="server-label"><Server size={16} /> Servidor:</span>
                     {servers.map((server, index) => (
                         <button

@@ -52,6 +52,24 @@
     padding-right: 20px;
 }
 
+.search-external-btn {
+    background: rgba(255, 165, 0, 0.2);
+    border: 1px solid rgba(255, 165, 0, 0.5);
+    color: orange;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-right: 15px;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.search-external-btn:hover {
+    background: rgba(255, 165, 0, 0.4);
+    transform: scale(1.05);
+}
+
 .server-label {
     color: #aaa;
     display: flex;
