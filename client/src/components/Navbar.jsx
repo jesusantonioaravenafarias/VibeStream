@@ -10,62 +10,52 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const Navbar = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { user, logout } = useAuth();
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
 
-    // Search State
-    const [showSearch, setShowSearch] = useState(false);
+    // --- SEARCH STATE (Overlay Mode) ---
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const searchInputRef = useRef(null);
 
-    // Notifications State
-    const [showNotifications, setShowNotifications] = useState(false);
+    // --- NOTIFICATION STATE (Simple Dropdown) ---
+    const [isNotifOpen, setIsNotifOpen] = useState(false);
     const [recentMovies, setRecentMovies] = useState([]);
 
     useEffect(() => {
         const handleScroll = () => {
-            if (window.scrollY > 100) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
+            setIsScrolled(window.scrollY > 50);
         };
-
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Fetch notifications (Simulated with Upcoming movies)
+    // Fetch Notifications
     useEffect(() => {
-        const fetchNotifications = async () => {
-            if (user) {
-                try {
-                    const response = await axios.get(`${API_URL}/movies/upcoming`, {
-                        params: { lang: navigator.language }
-                    });
-                    setRecentMovies(response.data.slice(0, 5)); // Top 5
-                } catch (error) {
-                    console.error("Failed to fetch notifications");
-                }
-            }
-        };
-        fetchNotifications();
+        if (user) {
+            axios.get(`${API_URL}/movies/upcoming`, { params: { lang: navigator.language } })
+                .then(res => setRecentMovies(res.data.slice(0, 5)))
+                .catch(err => console.error(err));
+        }
     }, [user]);
+
+    // Search Handlers
+    const openSearch = () => {
+        setIsSearchOpen(true);
+        setTimeout(() => searchInputRef.current?.focus(), 100);
+    };
+
+    const closeSearch = () => {
+        setIsSearchOpen(false);
+        setSearchQuery('');
+    };
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         if (searchQuery.trim()) {
             navigate(`/search?q=${searchQuery}`);
-            setShowSearch(false);
-        }
-    };
-
-    const toggleSearch = () => {
-        setShowSearch(!showSearch);
-        if (!showSearch) {
-            setTimeout(() => searchInputRef.current?.focus(), 100);
+            closeSearch();
         }
     };
 
@@ -75,89 +65,83 @@ const Navbar = () => {
     };
 
     return (
-        <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
-            <div className="navbar-container">
-                <div className="navbar-left">
-                    <Link to="/" className="navbar-logo">
-                        <img src="/logo-vellix.png" alt="Vellix Logo" className="logo-img" />
+        <>
+            {/* MAIN NAVBAR */}
+            <nav className={`custom-navbar ${isScrolled ? 'scrolled' : ''}`}>
+                <div className="nav-left">
+                    <Link to="/">
+                        <img src="/logo-vellix.png" alt="Logo" className="nav-logo" />
                     </Link>
-                    <div className="desktop-menu">
-                        <Link to="/" className="nav-link">{t('navbar.home')}</Link>
-                        <Link to="#" className="nav-link">{t('navbar.movies')}</Link>
-                        <Link to="#" className="nav-link">{t('navbar.series')}</Link>
-                        <Link to="#" className="nav-link">{t('navbar.new')}</Link>
-                        <Link to="#" className="nav-link">{t('navbar.list')}</Link>
+                    <div className="nav-links-desktop">
+                        <Link to="/">{t('navbar.home')}</Link>
+                        <Link to="#">{t('navbar.movies')}</Link>
+                        <Link to="#">{t('navbar.series')}</Link>
                     </div>
                 </div>
 
-                <div className="navbar-right">
-                    {/* Search Bar */}
-                    <div className={`search-box ${showSearch ? 'active' : ''}`}>
-                        <button className="icon-btn search-toggle" onClick={toggleSearch}>
-                            <Search size={20} />
-                        </button>
-                        <form onSubmit={handleSearchSubmit} className="search-form">
-                            <input
-                                ref={searchInputRef}
-                                type="text"
-                                placeholder={t('navbar.movies') + "..."}
-                                value={searchQuery}
-                                onChange={(e) => setSearchQuery(e.target.value)}
-                                onBlur={() => !searchQuery && setShowSearch(false)}
-                            />
-                        </form>
-                    </div>
+                <div className="nav-right">
+                    {/* BUTTONS: Explicit click handlers */}
+                    <button className="nav-action-btn" onClick={openSearch} title="Buscar">
+                        <Search size={22} />
+                    </button>
 
-                    {/* Notifications */}
-                    <div className="notification-box" style={{ position: 'relative' }}>
-                        <button className="icon-btn" onClick={() => setShowNotifications(!showNotifications)}>
-                            <Bell size={20} />
-                            {recentMovies.length > 0 && <span className="notification-dot"></span>}
+                    <div className="notif-container">
+                        <button className="nav-action-btn" onClick={() => setIsNotifOpen(!isNotifOpen)} title="Notificaciones">
+                            <Bell size={22} />
+                            {recentMovies.length > 0 && <span className="red-dot"></span>}
                         </button>
 
-                        {showNotifications && (
-                            <div className="notifications-dropdown">
-                                <h4>Próximos Estrenos</h4>
-                                {recentMovies.map(movie => (
-                                    <div key={movie.id} className="notification-item" onClick={() => {
-                                        navigate(`/watch/${movie.id}`, { state: { type: 'movie' } });
-                                        setShowNotifications(false);
+                        {/* Notification Dropdown */}
+                        {isNotifOpen && (
+                            <div className="simple-dropdown">
+                                <div className="dropdown-header">Estrenos</div>
+                                {recentMovies.map(m => (
+                                    <div key={m.id} className="dropdown-item" onClick={() => {
+                                        navigate(`/watch/${m.id}`, { state: { type: 'movie' } });
+                                        setIsNotifOpen(false);
                                     }}>
-                                        <img src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`} alt="" />
-                                        <div className="notif-text">
-                                            <p className="notif-title">{movie.title}</p>
-                                            <p className="notif-date">Nuevo</p>
-                                        </div>
+                                        <span>{m.title}</span>
                                     </div>
                                 ))}
                             </div>
                         )}
                     </div>
 
-                    <button className="icon-btn lang-btn" onClick={toggleLanguage} title="Cambiar idioma">
-                        <Globe size={20} />
-                        <span className="lang-code">{i18n.language?.toUpperCase().substring(0, 2)}</span>
+                    <button className="nav-action-btn" onClick={toggleLanguage}>
+                        <Globe size={22} />
+                        <span style={{ fontSize: '0.8rem', fontWeight: 'bold', marginLeft: '4px' }}>
+                            {i18n.language?.toUpperCase().substring(0, 2)}
+                        </span>
                     </button>
 
                     {user ? (
-                        <div className="user-profile">
-                            <User className="nav-icon active-user" />
-                            <div className="dropdown">
-                                <span className="user-name">{user.name}</span>
-                                <span>{t('nav_settings')}</span>
-                                <hr />
-                                <span onClick={logout}>{t('nav_logout')}</span>
-                            </div>
+                        <div className="profile-container">
+                            <User className="nav-action-btn user-icon" onClick={() => logout()} title="Logout (Click to exit)" />
                         </div>
                     ) : (
-                        <div className="navbar-auth-buttons">
-                            <Link to="/login" className="nav-btn-login">{t('nav_login')}</Link>
-                            <Link to="/register" className="nav-btn-register">{t('nav_register')}</Link>
+                        <div className="auth-links">
+                            <Link to="/login" className="btn-login">Login</Link>
                         </div>
                     )}
                 </div>
-            </div>
-        </nav>
+            </nav>
+
+            {/* SEARCH OVERLAY (Full Screen) */}
+            {isSearchOpen && (
+                <div className="search-overlay">
+                    <button className="close-search" onClick={closeSearch}><X size={30} /></button>
+                    <form onSubmit={handleSearchSubmit} className="big-search-form">
+                        <input
+                            ref={searchInputRef}
+                            type="text"
+                            placeholder="¿Qué quieres ver hoy?"
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                        />
+                    </form>
+                </div>
+            )}
+        </>
     );
 };
 
