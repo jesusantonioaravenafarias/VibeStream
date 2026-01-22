@@ -15,19 +15,19 @@ const WatchPage = () => {
     const lang = navigator.language.startsWith('es') ? 'es' : 'en'; // Simple logic for major providers
 
     const servers = [
-        {
-            name: 'Premium (Multi-Lang)', url: isMovie
-                ? `https://embed.su/embed/movie/${id}`
-                : `https://embed.su/embed/tv/${id}/1/1`
-        }, // Default S1E1
+        { name: 'HD (Super)', url: `https://vidsrc.cc/v2/embed/${mediaType}/${id}?autoPlay=true&lang=${lang}` },
         { name: 'LATAM (VidSrc)', url: `https://vidsrc.xyz/embed/${mediaType}/${id}?lang=${lang}` },
         { name: 'Plus (VidSrc.to)', url: `https://vidsrc.to/embed/${mediaType}/${id}?lang=${lang}` },
+        {
+            name: 'Premium (Embed.su)', url: isMovie
+                ? `https://embed.su/embed/movie/${id}`
+                : `https://embed.su/embed/tv/${id}/1/1`
+        },
         {
             name: 'Hosts (Dood/Filemoon)', url: isMovie
                 ? `https://multiembed.mov/?video_id=${id}&tmdb=1&lang=${lang}`
                 : `https://multiembed.mov/?video_id=${id}&tmdb=1&s=1&e=1&lang=${lang}`
-        }, // Default to S1E1 for Series
-        { name: 'HD (Super)', url: `https://vidsrc.cc/v2/embed/${mediaType}/${id}?autoPlay=true&lang=${lang}` }
+        }
     ];
 
     const [currentServer, setCurrentServer] = useState(servers[0]);
@@ -63,6 +63,11 @@ const WatchPage = () => {
                     referrerPolicy="origin"
                     title="Reproductor"
                 ></iframe>
+            </div>
+
+            <div className="watch-disclaimer">
+                <p>⚠️ ¿No carga o sale error de IP? Tu proveedor de internet podría estar bloqueando el sitio.</p>
+                <p>Solución: Cambia tus DNS a <strong>1.1.1.1</strong> (Cloudflare) o usa un VPN.</p>
             </div>
         </div>
     );
