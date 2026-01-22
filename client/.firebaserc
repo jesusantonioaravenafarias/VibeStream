@@ -2,6 +2,14 @@
   "projects": {
     "default": "vibestream-4998b"
   },
-  "targets": {},
+  "targets": {
+    "vibestream-4998b": {
+      "hosting": {
+        "vellix": [
+          "vellix"
+        ]
+      }
+    }
+  },
   "etags": {}
 }

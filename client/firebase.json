@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "site": "vellix",
+    "target": "vellix",
     "public": "dist",
     "ignore": [
       "firebase.json",

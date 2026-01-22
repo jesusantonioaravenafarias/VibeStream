@@ -40,30 +40,36 @@ const SearchPage = () => {
             {loading ? (
                 <div className="search-loading">Buscando...</div>
             ) : (
-                <div className="search-grid">
+                <>
                     {results.length > 0 ? (
-                        results.map((item) => (
-                            <motion.div
-                                layout
-                                key={item.id}
-                                className="search-card"
-                                whileHover={{ scale: 1.05 }}
-                                onClick={() => navigate(`/watch/${item.id}`, { state: { type: item.media_type || 'movie' } })}
-                            >
-                                <img
-                                    src={item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image'}
-                                    alt={item.title || item.name}
-                                    className="search-poster"
-                                />
-                                <div className="search-info">
-                                    <h3>{item.title || item.name}</h3>
-                                </div>
-                            </motion.div>
-                        ))
+                        <div className="search-grid">
+                            {results.map((item) => (
+                                <motion.div
+                                    layout
+                                    key={item.id}
+                                    className="search-card"
+                                    whileHover={{ scale: 1.05 }}
+                                    onClick={() => navigate(`/watch/${item.id}`, { state: { type: item.media_type || 'movie' } })}
+                                >
+                                    <img
+                                        src={item.poster_path ? `${IMAGE_BASE_URL}${item.poster_path}` : 'https://via.placeholder.com/500x750?text=No+Image'}
+                                        alt={item.title || item.name}
+                                        className="search-poster"
+                                    />
+                                    <div className="search-info">
+                                        <h3>{item.title || item.name}</h3>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
                     ) : (
-                        <div className="no-results">No encontramos nada para "{query}" :(</div>
+                        <div className="no-results">
+                            No encontramos nada para "{query}" :(
+                            <br />
+                            <span style={{ fontSize: '12px', color: 'red' }}>Current API: {API_URL}</span>
+                        </div>
                     )}
-                </div>
+                </>
             )}
         </div>
     );

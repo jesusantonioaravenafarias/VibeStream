@@ -23,11 +23,31 @@ const authenticate = (req, res, next) => {
     }
 };
 
+// Search Movies
+router.get('/search', async (req, res) => {
+    try {
+        const { query, lang } = req.query;
+        if (!query) return res.status(400).json({ message: 'Query parameter is required' });
+
+        const language = lang || 'es-ES';
+        const response = await axios.get(`${TMDB_BASE_URL}/search/multi`, {
+            params: { api_key: TMDB_API_KEY, query, language, page: 1, include_adult: false }
+        });
+        // Filter out people, keep movies and tv
+        const results = response.data.results.filter(item => item.media_type !== 'person');
+        res.json(results);
+    } catch (error) {
+        console.error('Error searching movies:', error);
+        res.status(500).json({ error: 'Failed to search movies' });
+    }
+});
+
 // Get Trending Movies
 router.get('/trending', async (req, res) => {
     try {
+        const lang = req.query.lang || 'es-ES';
         const response = await axios.get(`${TMDB_BASE_URL}/trending/all/week`, {
-            params: { api_key: TMDB_API_KEY, language: 'es-ES' }
+            params: { api_key: TMDB_API_KEY, language: lang }
         });
         res.json(response.data.results);
     } catch (error) {
@@ -39,8 +59,9 @@ router.get('/trending', async (req, res) => {
 // Get Popular Movies
 router.get('/popular', async (req, res) => {
     try {
+        const lang = req.query.lang || 'es-ES';
         const response = await axios.get(`${TMDB_BASE_URL}/movie/popular`, {
-            params: { api_key: TMDB_API_KEY, language: 'es-ES', page: 1 }
+            params: { api_key: TMDB_API_KEY, language: lang, page: 1 }
         });
         res.json(response.data.results);
     } catch (error) {
@@ -51,8 +72,9 @@ router.get('/popular', async (req, res) => {
 // Get Top Rated Movies
 router.get('/top-rated', async (req, res) => {
     try {
+        const lang = req.query.lang || 'es-ES';
         const response = await axios.get(`${TMDB_BASE_URL}/movie/top_rated`, {
-            params: { api_key: TMDB_API_KEY, language: 'es-ES', page: 1 }
+            params: { api_key: TMDB_API_KEY, language: lang, page: 1 }
         });
         res.json(response.data.results);
     } catch (error) {
@@ -63,8 +85,9 @@ router.get('/top-rated', async (req, res) => {
 // Get Upcoming Movies (New Releases)
 router.get('/upcoming', async (req, res) => {
     try {
+        const lang = req.query.lang || 'es-ES';
         const response = await axios.get(`${TMDB_BASE_URL}/movie/upcoming`, {
-            params: { api_key: TMDB_API_KEY, language: 'es-ES', page: 1 }
+            params: { api_key: TMDB_API_KEY, language: lang, page: 1 }
         });
         res.json(response.data.results);
     } catch (error) {
@@ -75,8 +98,9 @@ router.get('/upcoming', async (req, res) => {
 // Get Movie Details
 router.get('/:id', async (req, res) => {
     try {
+        const lang = req.query.lang || 'es-ES';
         const response = await axios.get(`${TMDB_BASE_URL}/movie/${req.params.id}`, {
-            params: { api_key: TMDB_API_KEY, append_to_response: 'videos', language: 'es-ES' }
+            params: { api_key: TMDB_API_KEY, append_to_response: 'videos', language: lang }
         });
         res.json(response.data);
     } catch (error) {

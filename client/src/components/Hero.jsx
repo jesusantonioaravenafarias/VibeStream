@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import './Hero.css';
 
-const Hero = ({ movie }) => {
+const Hero = ({ movie, onOpenInfo }) => {
     const navigate = useNavigate();
     if (!movie) return <div className="hero-placeholder" />;
 
@@ -35,7 +35,7 @@ const Hero = ({ movie }) => {
                     <button className="hero-button play" onClick={() => navigate(`/watch/${movie.id}`, { state: { type: movie.media_type || 'movie' } })}>
                         <Play size={20} fill="currentColor" /> Reproducir
                     </button>
-                    <button className="hero-button info">
+                    <button className="hero-button info" onClick={onOpenInfo}>
                         <Info size={20} /> Más información
                     </button>
                 </div>

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Row from './components/Row';
 import Footer from './components/Footer';
+import MovieModal from './components/MovieModal';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -19,11 +20,13 @@ const HomePage = () => {
     const { t } = useTranslation();
     const { movies } = useMovies('/movies/trending');
     const featuredMovie = movies[Math.floor(Math.random() * movies.length)];
+    const [selectedMovie, setSelectedMovie] = useState(null);
 
     return (
         <main>
             <Navbar />
-            <Hero movie={featuredMovie} />
+            <Hero movie={featuredMovie} onOpenInfo={() => setSelectedMovie(featuredMovie)} />
+            {selectedMovie && <MovieModal movie={selectedMovie} onClose={() => setSelectedMovie(null)} />}
             <div className="rows-container" style={{ width: '100%', marginTop: '10px', position: 'relative', zIndex: '20' }}>
                 <Row title={t('row_trending_week')} endpoint="/movies/trending" isLargeRow />
                 <Row title={t('row_popular')} endpoint="/movies/popular" isLargeRow />

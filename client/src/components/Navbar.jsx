@@ -31,14 +31,26 @@ const Navbar = () => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
+    // Click Outside Listener
+    const notifRef = useRef(null);
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (notifRef.current && !notifRef.current.contains(event.target)) {
+                setIsNotifOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     // Fetch Notifications
     useEffect(() => {
-        if (user) {
-            axios.get(`${API_URL}/movies/upcoming`, { params: { lang: navigator.language } })
-                .then(res => setRecentMovies(res.data.slice(0, 5)))
-                .catch(err => console.error(err));
-        }
-    }, [user]);
+        axios.get(`${API_URL}/movies/upcoming`, { params: { lang: navigator.language } })
+            .then(res => setRecentMovies(res.data.slice(0, 5)))
+            .catch(err => console.error(err));
+    }, []);
 
     // Search Handlers
     const openSearch = () => {
@@ -70,12 +82,12 @@ const Navbar = () => {
             <nav className={`custom-navbar ${isScrolled ? 'scrolled' : ''}`}>
                 <div className="nav-left">
                     <Link to="/">
-                        <img src="/logo-vellix.png" alt="Logo" className="nav-logo" />
+                        <img src="/logo.png" alt="Logo" className="nav-logo" />
                     </Link>
                     <div className="nav-links-desktop">
-                        <Link to="/">{t('navbar.home')}</Link>
-                        <Link to="#">{t('navbar.movies')}</Link>
-                        <Link to="#">{t('navbar.series')}</Link>
+                        <Link to="/">{t('nav_inicio')}</Link>
+                        <Link to="#">{t('nav_peliculas')}</Link>
+                        <Link to="#">{t('nav_series')}</Link>
                     </div>
                 </div>
 
@@ -85,7 +97,7 @@ const Navbar = () => {
                         <Search size={22} />
                     </button>
 
-                    <div className="notif-container">
+                    <div className="notif-container" ref={notifRef}>
                         <button className="nav-action-btn" onClick={() => setIsNotifOpen(!isNotifOpen)} title="Notificaciones">
                             <Bell size={22} />
                             {recentMovies.length > 0 && <span className="red-dot"></span>}
