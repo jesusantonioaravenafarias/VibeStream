@@ -12,16 +12,17 @@ const WatchPage = () => {
     // Determine type (default to movie if not provided)
     const mediaType = location.state?.type === 'tv' ? 'tv' : 'movie';
     const isMovie = mediaType === 'movie';
+    const lang = navigator.language.startsWith('es') ? 'es' : 'en'; // Simple logic for major providers
 
     const servers = [
-        { name: 'LATAM (VidSrc)', url: `https://vidsrc.xyz/embed/${mediaType}/${id}` },
-        { name: 'Plus (VidSrc.to)', url: `https://vidsrc.to/embed/${mediaType}/${id}` },
+        { name: 'LATAM (VidSrc)', url: `https://vidsrc.xyz/embed/${mediaType}/${id}?lang=${lang}` },
+        { name: 'Plus (VidSrc.to)', url: `https://vidsrc.to/embed/${mediaType}/${id}?lang=${lang}` },
         {
             name: 'Hosts (Dood/Filemoon)', url: isMovie
-                ? `https://multiembed.mov/?video_id=${id}&tmdb=1`
-                : `https://multiembed.mov/?video_id=${id}&tmdb=1&s=1&e=1`
+                ? `https://multiembed.mov/?video_id=${id}&tmdb=1&lang=${lang}`
+                : `https://multiembed.mov/?video_id=${id}&tmdb=1&s=1&e=1&lang=${lang}`
         }, // Default to S1E1 for Series
-        { name: 'HD (Super)', url: `https://vidsrc.cc/v2/embed/${mediaType}/${id}` }
+        { name: 'HD (Super)', url: `https://vidsrc.cc/v2/embed/${mediaType}/${id}?autoPlay=true&lang=${lang}` }
     ];
 
     const [currentServer, setCurrentServer] = useState(servers[0]);
