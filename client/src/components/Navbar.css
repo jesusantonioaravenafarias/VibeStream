@@ -8,7 +8,6 @@
     justify-content: space-between;
     align-items: center;
     z-index: 9999;
-    /* Boosted z-index */
     transition: var(--transition);
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
 }
@@ -25,25 +24,25 @@
     gap: 2rem;
 }
 
-.logo {
+.logo-img {
     height: 40px;
     filter: drop-shadow(0 0 10px var(--primary-glow));
     cursor: pointer;
     transition: var(--transition);
 }
 
-.logo:hover {
+.logo-img:hover {
     transform: scale(1.05);
     filter: drop-shadow(0 0 15px var(--primary-color));
 }
 
-.nav-links {
+.desktop-menu {
     display: flex;
-    list-style: none;
-    gap: 1.5rem;
+    gap: 2rem;
 }
 
-.nav-links li {
+.nav-link {
+    text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text-dim);
@@ -51,7 +50,7 @@
     transition: var(--transition);
 }
 
-.nav-links li:hover {
+.nav-link:hover {
     color: var(--text-color);
     text-shadow: 0 0 10px var(--primary-glow);
 }
@@ -60,19 +59,6 @@
     display: flex;
     align-items: center;
     gap: 1.5rem;
-}
-
-.nav-icon {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    color: var(--text-color);
-    transition: var(--transition);
-}
-
-.nav-icon:hover {
-    color: var(--primary-color);
-    transform: scale(1.1);
 }
 
 .navbar-auth-buttons {
@@ -124,7 +110,6 @@
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
     margin-top: 0.5rem;
     z-index: 10000;
-    /* Ensure dropdown is top */
 }
 
 .user-profile:hover .dropdown {
@@ -135,26 +120,11 @@
     font-size: 0.85rem;
     color: var(--text-dim);
     transition: var(--transition);
+    cursor: pointer;
 }
 
 .dropdown span:hover {
     color: var(--primary-color);
-}
-
-.login-nav-btn {
-    background-color: var(--primary-color);
-    color: white;
-    padding: 0.4rem 1.2rem;
-    border: none;
-    border-radius: 4px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.login-nav-btn:hover {
-    background-color: #7b1fa2;
-    box-shadow: 0 0 15px var(--primary-glow);
 }
 
 .active-user {
@@ -171,4 +141,165 @@
 hr {
     border: none;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* NEW STYLES for Search and Notifications */
+.icon-btn {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 15px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, color 0.2s;
+    z-index: 10001;
+    /* High priority */
+}
+
+.icon-btn:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.search-box.active {
+    border-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding-right: 10px;
+}
+
+.search-form {
+    width: 0;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.search-box.active .search-form {
+    width: 200px;
+}
+
+.search-form input {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    width: 100%;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.notification-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.notification-dot {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background-color: #ff3b30;
+    border-radius: 50%;
+    border: 1px solid #000;
+}
+
+.notifications-dropdown {
+    position: absolute;
+    top: 45px;
+    right: -10px;
+    width: 280px;
+    background-color: rgba(10, 10, 10, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    z-index: 10002;
+    overflow: hidden;
+    animation: fadeIn 0.2s ease;
+}
+
+.notifications-dropdown h4 {
+    padding: 12px 15px;
+    margin: 0;
+    font-size: 0.85rem;
+    color: #888;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.notification-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    cursor: pointer;
+    transition: background 0.2s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.notification-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.notification-item img {
+    width: 40px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.notif-text {
+    flex: 1;
+}
+
+.notif-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 2px 0;
+    color: #fff;
+}
+
+.notif-date {
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.lang-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.lang-btn .lang-code {
+    font-size: 0.8rem;
+    font-weight: bold;
 }
