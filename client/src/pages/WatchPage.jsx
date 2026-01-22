@@ -11,12 +11,17 @@ const WatchPage = () => {
 
     // Determine type (default to movie if not provided)
     const mediaType = location.state?.type === 'tv' ? 'tv' : 'movie';
+    const isMovie = mediaType === 'movie';
 
     const servers = [
-        { name: 'LATAM 1', url: `https://vidsrc.xyz/embed/${mediaType}/${id}` },
-        { name: 'LATAM 2', url: `https://vidsrc.to/embed/${mediaType}/${id}` },
-        { name: 'LATAM 3', url: `https://www.2embed.cc/embed/${id}` },
-        { name: 'HD', url: `https://vidsrc.cc/v2/embed/${mediaType}/${id}` }
+        { name: 'LATAM (VidSrc)', url: `https://vidsrc.xyz/embed/${mediaType}/${id}` },
+        { name: 'Plus (VidSrc.to)', url: `https://vidsrc.to/embed/${mediaType}/${id}` },
+        {
+            name: 'Hosts (Dood/Filemoon)', url: isMovie
+                ? `https://multiembed.mov/?video_id=${id}&tmdb=1`
+                : `https://multiembed.mov/?video_id=${id}&tmdb=1&s=1&e=1`
+        }, // Default to S1E1 for Series
+        { name: 'HD (Super)', url: `https://vidsrc.cc/v2/embed/${mediaType}/${id}` }
     ];
 
     const [currentServer, setCurrentServer] = useState(servers[0]);
