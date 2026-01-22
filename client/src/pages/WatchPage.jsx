@@ -64,11 +64,6 @@ const WatchPage = () => {
                     title="Reproductor"
                 ></iframe>
             </div>
-
-            <div className="watch-disclaimer">
-                <p>⚠️ ¿No carga o sale error de IP? Tu proveedor de internet podría estar bloqueando el sitio.</p>
-                <p>Solución: Cambia tus DNS a <strong>1.1.1.1</strong> (Cloudflare) o usa un VPN.</p>
-            </div>
         </div>
     );
 };
