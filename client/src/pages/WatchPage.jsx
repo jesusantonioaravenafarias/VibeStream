@@ -15,14 +15,14 @@ const WatchPage = () => {
     const lang = navigator.language.startsWith('es') ? 'es' : 'en'; // Simple logic for major providers
 
     const servers = [
+        { name: 'Latino Pro (VidLink)', url: `https://vidlink.pro/movie/${id}` }, // Often better for Latino auto-detect
         { name: 'HD (Super)', url: `https://vidsrc.cc/v2/embed/${mediaType}/${id}?autoPlay=true&lang=${lang}` },
-        { name: 'LATAM (VidSrc)', url: `https://vidsrc.xyz/embed/${mediaType}/${id}?lang=${lang}` },
-        { name: 'Plus (VidSrc.to)', url: `https://vidsrc.to/embed/${mediaType}/${id}?lang=${lang}` },
         {
             name: 'Premium (Embed.su)', url: isMovie
                 ? `https://embed.su/embed/movie/${id}`
                 : `https://embed.su/embed/tv/${id}/1/1`
         },
+        { name: 'Plus (VidSrc.to)', url: `https://vidsrc.to/embed/${mediaType}/${id}?lang=${lang}` },
         {
             name: 'Hosts (Dood/Filemoon)', url: isMovie
                 ? `https://multiembed.mov/?video_id=${id}&tmdb=1&lang=${lang}`
