@@ -170,13 +170,40 @@
 }
 
 /* AUTH */
-.btn-login {
-    background: var(--primary-color, #8a2be2);
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nav-auth-link {
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.nav-auth-link:hover {
+    color: var(--primary-color, #8a2be2);
+}
+
+.btn-register-nav {
+    background-color: var(--primary-color, #8a2be2);
     color: white;
     padding: 8px 16px;
     border-radius: 4px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: var(--transition);
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
+}
+
+.btn-register-nav:hover {
+    background-color: #7b1fa2;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 15px rgba(138, 43, 226, 0.6);
 }
 
 @keyframes fadeIn {

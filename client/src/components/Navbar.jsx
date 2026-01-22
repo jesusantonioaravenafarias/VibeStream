@@ -86,8 +86,8 @@ const Navbar = () => {
                     </Link>
                     <div className="nav-links-desktop">
                         <Link to="/">{t('nav_inicio')}</Link>
-                        <Link to="#">{t('nav_peliculas')}</Link>
-                        <Link to="#">{t('nav_series')}</Link>
+                        <Link to="/movies">{t('nav_peliculas')}</Link>
+                        <Link to="/series">{t('nav_series')}</Link>
                     </div>
                 </div>
 
@@ -132,7 +132,8 @@ const Navbar = () => {
                         </div>
                     ) : (
                         <div className="auth-links">
-                            <Link to="/login" className="btn-login">Login</Link>
+                            <Link to="/login" className="nav-auth-link">{t('auth_login')}</Link>
+                            <Link to="/register" className="btn-register-nav">{t('auth_register')}</Link>
                         </div>
                     )}
                 </div>

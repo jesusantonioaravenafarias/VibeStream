@@ -22,8 +22,8 @@ const Footer = () => {
                     <h3>{t('footer_explore') || 'Explore'}</h3>
                     <ul>
                         <li><Link to="/">{t('nav_inicio')}</Link></li>
-                        <li><Link to="/">{t('nav_peliculas')}</Link></li>
-                        <li><Link to="/">{t('nav_series')}</Link></li>
+                        <li><Link to="/movies">{t('nav_peliculas')}</Link></li>
+                        <li><Link to="/series">{t('nav_series')}</Link></li>
                     </ul>
                 </div>
 

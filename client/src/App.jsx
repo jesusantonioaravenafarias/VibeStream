@@ -6,6 +6,7 @@ import Hero from './components/Hero';
 import Row from './components/Row';
 import Footer from './components/Footer';
 import MovieModal from './components/MovieModal';
+import CategoryPage from './pages/CategoryPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import PrivacyPage from './pages/PrivacyPage';
@@ -50,6 +51,8 @@ function App() {
                         <Route path="/privacy" element={<PrivacyPage />} />
                         <Route path="/terms" element={<TermsPage />} />
                         <Route path="/watch/:id" element={<WatchPage />} />
+                        <Route path="/movies" element={<CategoryPage type="movie" />} />
+                        <Route path="/series" element={<CategoryPage type="series" />} />
                         <Route path="/search" element={<SearchPage />} />
                     </Routes>
                 </div>
