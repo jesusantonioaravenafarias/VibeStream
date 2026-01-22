@@ -11,7 +11,9 @@ export const useMovies = (endpoint = '/trending') => {
     useEffect(() => {
         const fetchMovies = async () => {
             try {
-                const response = await axios.get(`${API_URL}${endpoint}`);
+                const response = await axios.get(`${API_URL}${endpoint}`, {
+                    params: { lang: navigator.language }
+                });
                 if (Array.isArray(response.data)) {
                     setMovies(response.data);
                 } else {

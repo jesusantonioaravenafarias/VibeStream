@@ -19,9 +19,11 @@ const MovieModal = ({ movie, onClose }) => {
         if (movie) {
             const fetchDetails = async () => {
                 try {
-                    const response = await axios.get(`${API_URL}/movies/${movie.id}`);
+                    const response = await axios.get(`${API_URL}/movies/${movie.id}`, {
+                        params: { lang: navigator.language }
+                    });
                     setDetails(response.data);
-                    const video = response.data.videos?.results.find(v => v.type === 'Trailer');
+                    const video = response.data.videos?.results.find(v => v.type === 'Trailer') || response.data.videos?.results[0];
                     if (video) setTrailer(video.key);
                 } catch (error) {
                     console.error("Error fetching movie details", error);
