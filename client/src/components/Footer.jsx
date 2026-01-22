@@ -1,5 +1,5 @@
 import React from 'react';
-import { Facebook, Instagram, Twitter, Mail, Globe } from 'lucide-react';
+import { Mail, Globe } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import './Footer.css';
@@ -16,20 +16,14 @@ const Footer = () => {
                     <p className="footer-tagline">
                         {t('footer_tagline') || 'Premium streaming for the digital era.'}
                     </p>
-                    <div className="social-links">
-                        <a href="#" className="social-icon"><Facebook size={20} /></a>
-                        <a href="#" className="social-icon"><Instagram size={20} /></a>
-                        <a href="#" className="social-icon"><Twitter size={20} /></a>
-                    </div>
                 </div>
 
                 <div className="footer-section links">
                     <h3>{t('footer_explore') || 'Explore'}</h3>
                     <ul>
-                        <li><a href="#">{t('nav_inicio')}</a></li>
-                        <li><a href="#">{t('nav_peliculas')}</a></li>
-                        <li><a href="#">{t('nav_series')}</a></li>
-                        <li><a href="#">{t('nav_novedades')}</a></li>
+                        <li><Link to="/">{t('nav_inicio')}</Link></li>
+                        <li><Link to="/">{t('nav_peliculas')}</Link></li>
+                        <li><Link to="/">{t('nav_series')}</Link></li>
                     </ul>
                 </div>
 

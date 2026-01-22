@@ -95,6 +95,47 @@ router.get('/upcoming', async (req, res) => {
     }
 });
 
+// --- TV SERIES ROUTES ---
+
+// Get Popular Series
+router.get('/series/popular', async (req, res) => {
+    try {
+        const lang = req.query.lang || 'es-ES';
+        const response = await axios.get(`${TMDB_BASE_URL}/tv/popular`, {
+            params: { api_key: TMDB_API_KEY, language: lang, page: 1 }
+        });
+        res.json(response.data.results);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching popular series' });
+    }
+});
+
+// Get Top Rated Series
+router.get('/series/top-rated', async (req, res) => {
+    try {
+        const lang = req.query.lang || 'es-ES';
+        const response = await axios.get(`${TMDB_BASE_URL}/tv/top_rated`, {
+            params: { api_key: TMDB_API_KEY, language: lang, page: 1 }
+        });
+        res.json(response.data.results);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching top rated series' });
+    }
+});
+
+// Get On The Air Series (Trending/New)
+router.get('/series/on-the-air', async (req, res) => {
+    try {
+        const lang = req.query.lang || 'es-ES';
+        const response = await axios.get(`${TMDB_BASE_URL}/tv/on_the_air`, {
+            params: { api_key: TMDB_API_KEY, language: lang, page: 1 }
+        });
+        res.json(response.data.results);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching on the air series' });
+    }
+});
+
 // Get Movie Details
 router.get('/:id', async (req, res) => {
     try {
